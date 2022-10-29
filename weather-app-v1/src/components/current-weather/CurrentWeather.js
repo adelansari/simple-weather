@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { WEATHER_API_KEY, FORECAST } from '../../Api'
 import axios from 'axios'
-import { Card } from 'react-bootstrap';
+import { Card, InputGroup, Form, Button } from 'react-bootstrap';
 
 
-function CurrentWeather({ cityData }) {
+const CurrentWeather = ({ cityData }) => {
 
   const [weather, setWeather] = useState();
 
@@ -26,30 +26,52 @@ function CurrentWeather({ cityData }) {
         },
       }
       const response = await axios.get(`${cityWeatherUrl}`, request)
-
-      console.log(response.data)
-
       setWeather(response.data)
+      
     }
 
     // calling the function
-    getWeather().catch(err => console.log(err.message))
+    (async () => await getWeather())();
 
   }, [cityData.Key])
 
+
+  const styles = {
+    title: {
+      fontSize: 30,
+      lineHeight: 2,
+      // fontWeight: 'bold'
+    },
+    superText: {
+      // color: 'black',
+      verticalAlign: "super",
+      backgroundColor: '#9B3C0C',
+      borderRadius: 5,
+      fontSize: 15,
+    },
+    text: {
+      lineHeight: 1,
+    },
+  }
+
   return (
     <div>
-      <Card className="bg-dark text-white">
-        <Card.Img src="holder.js/100px270" alt="Card image" />
-        <Card.ImgOverlay>
-          <Card.Title>Card title</Card.Title>
-          <Card.Text>
-            This is a wider card with supporting text below as a natural lead-in
-            to additional content. This content is a little bit longer.
+      <div className="bg-dark bg-opacity-50 py-4 text-center">
+        <Card.Title style={styles.title}>
+          {cityData.EnglishName}
+          <sup style={styles.superText}>{cityData.Country.ID}</sup>
+        </Card.Title>
+        {/* <Card.Text>min: {weather.DailyForecasts[0].Temperature.Minimum.Value} °C</Card.Text>
+        <Card.Text>max: {weather.DailyForecasts[0].Temperature.Maximum.Value} °C</Card.Text> */}
+
+
+        <Card.Text style={styles.text}>
+          {weather.DailyForecasts[0].Day.PrecipitationIntensity} {weather.DailyForecasts[0].Day.PrecipitationType}
           </Card.Text>
-          <Card.Text>Last updated 3 mins ago</Card.Text>
-        </Card.ImgOverlay>
-      </Card>
+
+        {/* <Card.Text>Min: {Math.round({weather.Temperature})}°C</Card.Text> */}
+        {/* <Card.Text>Max: {Math.round(weather[1].Temperature.Maximum.Value)}°C</Card.Text> */}
+      </div>
     </div>
   )
 }
