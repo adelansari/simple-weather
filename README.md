@@ -1,5 +1,5 @@
 # simple-weather
-React Weather
+React Weather using AccuWeather API
 
 
 npm install axios

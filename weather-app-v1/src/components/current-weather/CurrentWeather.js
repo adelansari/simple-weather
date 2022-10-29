@@ -31,7 +31,9 @@ const CurrentWeather = ({ cityData }) => {
     }
 
     // calling the function
-    (async () => await getWeather())();
+    getWeather().catch(console.error);
+
+    // (async () => await getWeather())();
 
   }, [cityData.Key])
 
@@ -61,13 +63,13 @@ const CurrentWeather = ({ cityData }) => {
           {cityData.EnglishName}
           <sup style={styles.superText}>{cityData.Country.ID}</sup>
         </Card.Title>
-        {/* <Card.Text>min: {weather.DailyForecasts[0].Temperature.Minimum.Value} °C</Card.Text>
-        <Card.Text>max: {weather.DailyForecasts[0].Temperature.Maximum.Value} °C</Card.Text> */}
+        <Card.Text>min: {weather.DailyForecasts[0].Temperature.Minimum.Value} °C</Card.Text>
+        <Card.Text>max: {weather.DailyForecasts[0].Temperature.Maximum.Value} °C</Card.Text>
 
 
-        <Card.Text style={styles.text}>
+        {/* <Card.Text style={styles.text}>
           {weather.DailyForecasts[0].Day.PrecipitationIntensity} {weather.DailyForecasts[0].Day.PrecipitationType}
-          </Card.Text>
+          </Card.Text> */}
 
         {/* <Card.Text>Min: {Math.round({weather.Temperature})}°C</Card.Text> */}
         {/* <Card.Text>Max: {Math.round(weather[1].Temperature.Maximum.Value)}°C</Card.Text> */}
