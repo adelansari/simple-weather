@@ -9,9 +9,10 @@ const CurrentWeather = ({ cityData }) => {
     const [avgTemp, setAvgTemp] = useState();
     const [loading, setLoading] = useState("false");
 
-    const WEEK_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    let today = new Date().toLocaleDateString('en-GB')
-    const dayInAWeek = new Date().getDay();
+    const WEEK_DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    let day = new Date()
+    let today = day.toLocaleDateString('en-GB')
+    const dayInAWeek = day.getDay();
 
 
     useEffect(() => {
@@ -63,27 +64,20 @@ const CurrentWeather = ({ cityData }) => {
 
 
     const styles = {
-        // title: {
-        //     fontSize: 30,
-        //     lineHeight: 2,
-        //     // fontWeight: 'bold'
-        // },
         superText: {
-            // color: 'black',
+            color: "black",
             verticalAlign: "super",
-            backgroundColor: '#9B3C0C',
+            backgroundColor: 'yellow',
             borderRadius: 5,
             fontSize: 15,
-        },
-        text: {
-            lineHeight: 2,
+            fontWeight: 'bold',
         },
         avgTemp: {
             fontSize: 80,
         },
-        weatherDetail: {
-            marginLeft: 8,
-        },
+        // weatherDetail: {
+        //     marginLeft: 8,
+        // },
     }
 
     return (
@@ -91,15 +85,20 @@ const CurrentWeather = ({ cityData }) => {
             {weather && <div>
                 <div className="text-center bg-dark bg-opacity-50 py-4 font-monospace">
 
-                    <Card.Text>{WEEK_DAYS[dayInAWeek - 1]} , {today}</Card.Text>
+
+                    
+                    <div className="bg-dark bg-opacity-25 mx-4 border border-info">
+                    <Card.Text className="fs-6 mt-3">{WEEK_DAYS[dayInAWeek]} , {today}</Card.Text>
                     <Card.Title className="fs-1 mb-4">
                         {cityData.EnglishName}
                         <sup style={styles.superText}>{cityData.Country.ID}</sup>
                     </Card.Title>
 
-                    <Row>
+                    </div>
+
+                    <Row >
                         <Col>
-                            <Figure.Image className="img-fluid"
+                            <Figure.Image className="img-fluid mt-4"
                                 width={150}
                                 // height={300}
                                 // src={`${ICONS}${weather.Icon}-s.png`}
@@ -107,19 +106,33 @@ const CurrentWeather = ({ cityData }) => {
                             />
                         </Col>
                         <Col>
-                            <Card.Text className="fw-bold lh-1" style={styles.avgTemp}>
+                            <Card.Text className="fw-bold lh-1 mt-4" style={styles.avgTemp}>
                                 {Math.round(avgTemp)}
                                 <sup>°C</sup>
                             </Card.Text>
                         </Col>
                     </Row>
 
-                    <Card.Text style={styles.text}>min: {Math.round(weather.Minimum.Value)} °C  | max: {Math.round(weather.Maximum.Value)} °C</Card.Text>
-                    <Card.Text className="text-start fst-italic" style={styles.weatherDetail} alt="WeatherDetails">{weather.Text}</Card.Text>
+                    <Card.Text className="fs-5 mt-4 lh-1">
+                        <Row>
+                            <Col className="text-info fw-bold fs-3">
+                                {weather.IconPhrase}
+                            </Col>
+                            <Col className="fst-italic">
+                                min: {Math.round(weather.Minimum.Value)} °C
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                            </Col>
+                            <Col className=".text-light fst-italic">
+                                max: {Math.round(weather.Maximum.Value)} °C
+                            </Col>
+                        </Row>
 
-
+                    </Card.Text>
+                    <Card.Text className="fs-5 mx-4 lh-1" alt="WeatherDetails">{weather.Text}</Card.Text>
                     <Card.Footer className="text lh-1 mt-5 fixed-bottom position-absolute bottom-0 start-50 translate-middle-x">AccuWeather</Card.Footer>
-
                 </div>
             </div>}
             {!weather && <div>

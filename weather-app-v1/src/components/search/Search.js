@@ -11,8 +11,26 @@ const Search = () => {
     const [cityData, setCityData] = useState('')
     const [fetchError, setFetchError] = useState(null)
 
+    // geolocation
+    const optionsLocation = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    };
+
+    const successLocation = (position) => {
+        const coordinates = position.coords;
+        const { latitude, longitude } = coordinates
+        setCity(`${latitude},${longitude}`)
+    }
+
+    const errorLocation = (err) => {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+
     // Fetch city key from API
     const getCityData = (event) => {
+        console.log(event)
         event.preventDefault();
         if (!city) return;
         const request = {
@@ -50,7 +68,7 @@ const Search = () => {
                         <Card.Img
                             src={backgroundImage}
                             alt="Background Image"
-                            // style={styles.cardImage}
+                        // style={styles.cardImage}
                         />
                         <Card.ImgOverlay>
                             <Card.Title style={styles.title}>Weather App</Card.Title>
@@ -66,9 +84,19 @@ const Search = () => {
                                 <Button type="submit" onClick={getCityData}>
                                     <i className="fas fa-search"></i>
                                 </Button>
+                                <Button type="submit" onClick={() => {
+                                    navigator.geolocation.getCurrentPosition(successLocation, errorLocation, optionsLocation);
+                                }}>
+                                    <i className="fas fa-location-dot"></i>
+                                </Button>
 
                             </InputGroup>
-                            {fetchError && <p style={{ color: 'red' }}>{`${fetchError}`}</p>}
+                            {fetchError && <p
+                                className="fs-4 bg-danger bg-opacity-25 "
+                                style={{ color: 'red' }}
+                            >
+                                {`${fetchError}`}
+                            </p>}
                             {!fetchError && cityData && <CurrentWeather cityData={cityData} />}
                         </Card.ImgOverlay>
                     </Card>

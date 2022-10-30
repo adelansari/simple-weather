@@ -1,4 +1,5 @@
 import './App.css';
+import './App.scss';
 // import CurrentWeather from './components/current-weather/CurrentWeather';
 import Search from './components/search/Search';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
