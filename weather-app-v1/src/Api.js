@@ -1,7 +1,7 @@
 
 export const WEATHER_API_KEY = process.env.REACT_APP_API_KEY
-export const SEARCHED_CITY = 'http://dataservice.accuweather.com/locations/v1/cities/search'
-export const FORECAST = 'http://dataservice.accuweather.com/forecasts/v1/daily/1day/'
+export const SEARCHED_CITY = 'https://dataservice.accuweather.com/locations/v1/cities/search'
+export const FORECAST = 'https://dataservice.accuweather.com/forecasts/v1/daily/1day/'
 export const ICONS = 'https://developer.accuweather.com/sites/default/files/'
 
 // const CityKey = location => `${SEARCHED_CITY}?apikey=${WEATHER_API_KEY}&${location}`
