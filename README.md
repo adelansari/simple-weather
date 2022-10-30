@@ -1,6 +1,8 @@
 # simple-weather
 A weather app created with ReactJs
 
+Test it here: https://ephemeral-bonbon-ea77af.netlify.app/
+
 <img src="./weather-app-v1/public/Showcase00.JPG">
 
 ## Setup
