@@ -4,6 +4,7 @@ import axios from 'axios'
 import CurrentWeather from '../current-weather/CurrentWeather'
 import { Card, InputGroup, Form, Button } from 'react-bootstrap';
 import backgroundImage from '../../assets/BackgroundWallpaper.jpg'
+import GeoLocationButton from './GeoLocationButton'
 
 const Search = () => {
 
@@ -11,22 +12,7 @@ const Search = () => {
     const [cityData, setCityData] = useState('')
     const [fetchError, setFetchError] = useState(null)
 
-    // geolocation
-    const optionsLocation = {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0
-    };
 
-    const successLocation = (position) => {
-        const coordinates = position.coords;
-        const { latitude, longitude } = coordinates
-        setCity(`${latitude},${longitude}`)
-    }
-
-    const errorLocation = (err) => {
-        console.warn(`ERROR(${err.code}): ${err.message}`);
-    }
 
     // Fetch city key from API
     const getCityData = (event) => {
@@ -84,11 +70,9 @@ const Search = () => {
                                 <Button type="submit" onClick={getCityData}>
                                     <i className="fas fa-search"></i>
                                 </Button>
-                                <Button type="submit" onClick={() => {
-                                    navigator.geolocation.getCurrentPosition(successLocation, errorLocation, optionsLocation);
-                                }}>
-                                    <i className="fas fa-location-dot"></i>
-                                </Button>
+                                <GeoLocationButton
+                                    setCity={setCity}
+                                />
 
                             </InputGroup>
                             {fetchError && <p
